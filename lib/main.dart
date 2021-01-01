@@ -1,7 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:firebase_core/firebase_core.dart';
 
-void main() {
-  runApp(MyApp());
+import 'components/auth/login.dart';
+import 'components/auth/register.dart';
+import 'components/auth/splash.dart';
+
+void main() async {
+  // https://stackoverflow.com/a/63740416
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
+  runApp(MyApp());   
 }
 
 class MyApp extends StatelessWidget {
@@ -26,7 +34,12 @@ class MyApp extends StatelessWidget {
         // closer together (more dense) than on mobile platforms.
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      home: MyHomePage(title: 'Flutter Demo Home Page'),
+      //home: MyHomePage(title: 'Flutter Demo Home Page'),
+      home: SplashPage(),
+      routes: <String, WidgetBuilder>{
+        '/login': (BuildContext ctx) => LoginPage(),
+        '/register': (BuildContext ctx) => RegisterPage(),
+      },
     );
   }
 }
