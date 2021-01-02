@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "1065308012080",
+    "project_id": "new-year-new-me-ac5c3",
+    "storage_bucket": "new-year-new-me-ac5c3.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1065308012080:android:0980dd6c341eafd9b537f5",
+        "android_client_info": {
+          "package_name": "com.example.nynm_fapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1065308012080-6ob17gkehau3pgbvfl1c2dqh48vb1k33.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAIRKWoGQfEMUBcALQye1PbPUurPYY6wqA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1065308012080-6ob17gkehau3pgbvfl1c2dqh48vb1k33.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
