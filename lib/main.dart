@@ -1,36 +1,32 @@
 import 'package:flutter/material.dart';
-
-// Import the firebase_core plugin
 import 'package:firebase_core/firebase_core.dart';
+import 'package:nynm_fapp/components/auth/forgetPassword.dart';
 
-void main() {
-  runApp(App());
+import 'components/auth/login.dart';
+import 'components/auth/register.dart';
+import 'components/auth/splash.dart';
+
+void main() async {
+  // https://stackoverflow.com/a/63740416
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
+  runApp(MyApp());
 }
 
-class App extends StatelessWidget {
-  // Create the initialization Future outside of `build`:
-  final Future<FirebaseApp> _initialization = Firebase.initializeApp();
-
+class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder(
-      // Initialize FlutterFire:
-      future: _initialization,
-      builder: (context, snapshot) {
-        // Check for errors
-        if (snapshot.hasError) {
-          return Container(
-            color: Colors.red,
-          );
-        }
-
-        // Once complete, show your application
-        if (snapshot.connectionState == ConnectionState.done) {
-          return Container(color: Colors.green);
-        }
-
-        // Otherwise, show something whilst waiting for initialization to complete
-        return CircularProgressIndicator();
+    return MaterialApp(
+      title: 'New Year New Me',
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
+        visualDensity: VisualDensity.adaptivePlatformDensity,
+      ),
+      home: SplashPage(),
+      routes: <String, WidgetBuilder>{
+        '/login': (BuildContext ctx) => LoginPage(),
+        '/register': (BuildContext ctx) => RegisterPage(),
+        '/forgetPassword': (BuildContext ctx) => ForgetPassword(),
       },
     );
   }
