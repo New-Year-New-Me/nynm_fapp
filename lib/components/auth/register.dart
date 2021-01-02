@@ -92,6 +92,11 @@ class _RegisterPageState extends State<RegisterPage> {
         (FirebaseFirestore.instance.collection("users").doc(user.uid).set({
           "name": nameController.text,
           "email": emailController.text,
+          "avatar": "https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png",
+          "resolution_count": 0,
+          "desc": "Hi! This is my new year resolution.",
+          "following_count": 0,
+          "followers_count": 0,
         })).then((result) => {
               // move to home page
               // load feed

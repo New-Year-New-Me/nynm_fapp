@@ -1,8 +1,11 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import "package:flutter/material.dart";
 import 'package:firebase_auth/firebase_auth.dart';
 
 import "package:nynm_fapp/components/home/feeds.dart";
 import "package:nynm_fapp/components/home/user_profile.dart";
+import 'package:nynm_fapp/components/model/user.dart';
+import "package:nynm_fapp/components/home/search_results.dart";
 
 class HomeRoot extends StatefulWidget {
   final String title;
@@ -14,28 +17,32 @@ class HomeRoot extends StatefulWidget {
 }
 
 class _HomeRootState extends State<HomeRoot> {
+  Icon actionIcon = new Icon(Icons.search);
+  Widget appBarTitle = Text("NYNM");
 
-  int _currentIndex = 0;
-
-  // TODO: Feed, Leaderboard, UserProfile
-  final List<Widget> _children = [
+  List<Widget> _children = [
     FeedPageWidget(),
-    FeedPageWidget(),
+    // FeedPageWidget(),
     UserProfileWidget(uid: FirebaseAuth.instance.currentUser.uid),
   ];
 
-  final List<BottomNavigationBarItem> _navbar_items = [
-    BottomNavigationBarItem(icon: Icon(Icons.home), label: "Home" ),
-    BottomNavigationBarItem(icon: Icon(Icons.shop_rounded), label: "Marketplace" ),
-    BottomNavigationBarItem(icon: Icon(Icons.account_circle), label: "Profile" )
-  ];
+  int _currentIndex = 0;
 
+  final List<BottomNavigationBarItem> _navbar_items = [
+    BottomNavigationBarItem(icon: Icon(Icons.home), label: "Home"),
+    // BottomNavigationBarItem( icon: Icon(Icons.shop_rounded), label: "Marketplace"),
+    BottomNavigationBarItem(icon: Icon(Icons.account_circle), label: "Profile")
+  ];
 
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.title),
+        title: appBarTitle,
         actions: <Widget>[
+          IconButton(
+            icon: actionIcon,
+            onPressed: search,
+          ),
           FlatButton(
             child: Text("Log Out"),
             textColor: Colors.white,
@@ -52,14 +59,47 @@ class _HomeRootState extends State<HomeRoot> {
     );
   }
 
-  void changeTab(int index){
+  void changeTab(int index) {
     setState(() {
       _currentIndex = index;
     });
   }
 
-  void signout(){
-      FirebaseAuth.instance.signOut().then((result) =>  
-      {Navigator.pushReplacementNamed(context, "/login")});
+  void signout() {
+    FirebaseAuth.instance
+        .signOut()
+        .then((result) => {Navigator.pushReplacementNamed(context, "/login")});
   }
+
+  void search() {
+    setState(() {
+      if (this.actionIcon.icon == Icons.search) {
+        this.actionIcon = new Icon(Icons.close);
+        this.appBarTitle = new TextField(
+          onSubmitted: showSearchResult,
+          style: new TextStyle(
+            color: Colors.white,
+          ),
+          decoration: new InputDecoration(
+              prefixIcon: new Icon(Icons.search, color: Colors.white),
+              hintText: "Search...",
+              hintStyle: new TextStyle(color: Colors.white)),
+        );
+      } else {
+        this.actionIcon = new Icon(Icons.search);
+        this.appBarTitle = new Text("NYNM");
+      }
+    });
+  }
+
+  void showSearchResult(String searchProfile){
+    (FirebaseFirestore.instance.collection("users").orderBy("name").startAt([searchProfile]).endAt([searchProfile+'\uf8ff']).get()).then(
+      (querysnapshot) => {
+        Navigator.push(context, MaterialPageRoute(
+          builder: (context) => SearchResultPage(querySnapshots: querysnapshot.docs)
+        ))
+      });
+  }
+
+
 }
