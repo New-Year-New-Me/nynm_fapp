@@ -19,3 +19,11 @@ void alertError(BuildContext context, dynamic e) {
         return alert;
       });
 }
+
+Function handleError(context) {
+  onError(e) {
+    alertError(context, e.message);
+  }
+
+  return onError;
+}
