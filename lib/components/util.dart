@@ -19,3 +19,12 @@ void alertError(BuildContext context, dynamic e) {
         return alert;
       });
 }
+
+Function handleError(context) {
+  onError(e, stackTrace) {
+    print(stackTrace.toString());
+    alertError(context, e.message);
+  }
+
+  return onError;
+}

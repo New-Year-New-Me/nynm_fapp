@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:nynm_fapp/components/auth/forgetPassword.dart';
+import 'package:nynm_fapp/components/resolution/addResolution.dart';
 
 import 'components/auth/login.dart';
 import 'components/auth/register.dart';
@@ -27,6 +28,7 @@ class MyApp extends StatelessWidget {
         '/login': (BuildContext ctx) => LoginPage(),
         '/register': (BuildContext ctx) => RegisterPage(),
         '/forgetPassword': (BuildContext ctx) => ForgetPassword(),
+        '/addResolution': (BuildContext context) => AddResolution()
       },
     );
   }
