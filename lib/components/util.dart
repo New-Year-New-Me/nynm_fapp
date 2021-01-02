@@ -4,7 +4,13 @@ void alertError(BuildContext context, dynamic e) {
   AlertDialog alert = AlertDialog(
     title: Text("Error"),
     content: Text(e.toString()),
-    actions: [FlatButton(onPressed: null, child: Text("Cancel"))],
+    actions: [
+      FlatButton(
+          onPressed: () {
+            Navigator.pop(context);
+          },
+          child: Text("OK"))
+    ],
   );
 
   showDialog(

@@ -1,6 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:nynm_fapp/components/home/feeds.dart';
 import 'package:nynm_fapp/components/util.dart';
 
@@ -17,8 +19,15 @@ class _LoginPageState extends State<LoginPage> {
         appBar: AppBar(title: Text("Login")),
         body: Padding(
             padding: EdgeInsets.all(10),
-            child: ListView(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.end,
               children: <Widget>[
+                Expanded(
+                    child: Container(
+                  child: Center(
+                    child: Text("Logo Here"),
+                  ),
+                )),
                 Container(
                     alignment: Alignment.center,
                     padding: EdgeInsets.all(10),
@@ -40,12 +49,15 @@ class _LoginPageState extends State<LoginPage> {
                     )),
                 Container(
                     height: 50,
+                    width: double.infinity,
                     padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
                     child: RaisedButton(
-                      textColor: Colors.white,
                       color: Colors.blue,
+                      colorBrightness: Brightness.dark,
                       child: Text('Login'),
                       onPressed: login,
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(10))),
                     )),
                 Container(
                     child: Row(
@@ -78,8 +90,7 @@ class _LoginPageState extends State<LoginPage> {
   void login() {
     // Perform login action
     try {
-      CircularProgressIndicator();
-
+      Fluttertoast.showToast(msg: "Logging in...");
       FirebaseAuth.instance
           .signInWithEmailAndPassword(
               email: emailController.text, password: passwordController.text)
@@ -92,7 +103,7 @@ class _LoginPageState extends State<LoginPage> {
                             title: "Feed", uid: userCredential.user.uid)),
                     (_) => false)
               })
-          .catchError((err) => {alertError(context, err)});
+          .catchError((err) => {alertError(context, err.message)});
     } catch (e) {
       alertError(context, e);
     }
