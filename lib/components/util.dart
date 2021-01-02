@@ -21,7 +21,8 @@ void alertError(BuildContext context, dynamic e) {
 }
 
 Function handleError(context) {
-  onError(e) {
+  onError(e, stackTrace) {
+    print(stackTrace.toString());
     alertError(context, e.message);
   }
 

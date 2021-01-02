@@ -43,17 +43,17 @@ class _FeedPageState extends State<FeedPage> {
   }
 
   void addResolution() async {
-    Resolution resolution =
-        await Navigator.pushNamed(context, "/addResolution");
-    Fluttertoast.showToast(msg: "Posting Resolution");
-    var ref = FirebaseFirestore.instance.collection("resolutions").doc();
-    var id = ref.id;
-    ref.set({
-      "data": resolution,
-      "users": [widget.uid]
-    }).then((value) {
-      FirebaseFirestore.instance.collection("users").doc(widget.uid).update({
-        "resolutions": FieldValue.arrayUnion([id])
+    await Navigator.pushNamed(context, "/addResolution").then((result) {
+      Resolution resolution = result;
+      if (resolution is! Resolution || resolution == null) return;
+      Fluttertoast.showToast(msg: "Posting Resolution");
+      var ref = FirebaseFirestore.instance
+          .collection("users")
+          .doc(widget.uid)
+          .collection("resolutions")
+          .doc()
+          .set({
+        "resolution": resolution.toMap(),
       }).then((value) {
         Fluttertoast.showToast(
             msg: "Resolution Updated", backgroundColor: Colors.green);
