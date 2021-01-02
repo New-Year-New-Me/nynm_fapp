@@ -2,7 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:nynm_fapp/components/home/feeds.dart';
+import 'package:nynm_fapp/components/home/home_root.dart';
 import 'package:nynm_fapp/components/util.dart';
 
 class RegisterPage extends StatefulWidget {
@@ -99,7 +99,7 @@ class _RegisterPageState extends State<RegisterPage> {
                   context,
                   MaterialPageRoute(
                       builder: (context) =>
-                          FeedPage(title: "Feed", uid: user.uid)),
+                          HomeRoot(title: "Feed", uid: user.uid)),
                   (_) => false),
               emailController.clear(),
               nameController.clear(),

@@ -1,33 +1,14 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import "package:flutter/material.dart";
 
-class FeedPage extends StatefulWidget {
-  final String title;
-  final String uid;
+class FeedPageWidget extends StatelessWidget {
 
-  FeedPage({Key key, this.title, this.uid}) : super(key: key);
+  const FeedPageWidget({Key key}) : super(key: key);
 
-  _FeedPageState createState() => _FeedPageState();
-}
-
-class _FeedPageState extends State<FeedPage> {
+  @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(widget.title),
-        actions: <Widget>[
-          FlatButton(
-            child: Text("Log Out"),
-            textColor: Colors.white,
-            onPressed: () {
-              // Sign out from App
-              FirebaseAuth.instance.signOut().then((result) =>
-                  {Navigator.pushReplacementNamed(context, "/login")});
-            },
-          )
-        ],
-      ),
-      body: Center(child: Container(child: Text("Welcome User " + widget.uid))),
+    return Container(
+      color: Colors.blue[200],
     );
   }
 }
