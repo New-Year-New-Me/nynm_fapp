@@ -82,8 +82,17 @@ class _HomeRootState extends State<HomeRoot> {
       }).then((value) {
         Fluttertoast.showToast(
             msg: "Resolution Updated", backgroundColor: Colors.green);
+        incrementResolutionCount();
       }).catchError(handleError(context));
     }).catchError(handleError(context));
+  }
+
+  void incrementResolutionCount(){
+    FirebaseFirestore.instance.collection("users")
+    .doc(widget.uid)
+    .update({
+      "resolution_count": FieldValue.increment(1)
+    });
   }
 
   void changeTab(int index) {

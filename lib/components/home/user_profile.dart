@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import "package:flutter/material.dart";
+import 'package:nynm_fapp/components/home/edit_profile.dart';
 import "package:nynm_fapp/components/model/user.dart";
 import 'package:nynm_fapp/components/util.dart';
 
@@ -66,7 +67,7 @@ class UserProfileWidget extends StatelessWidget {
                   ],
                 )),
                 Column(
-                  children: [actionButton(context)],
+                  children: [actionButton(context, user)],
                 ),
                 Padding(padding: EdgeInsets.only(right: 10))
               ],
@@ -103,13 +104,13 @@ class UserProfileWidget extends StatelessWidget {
         ],
       ));
 
-  Widget actionButton(BuildContext context) {
+  Widget actionButton(BuildContext context, UserModel user) {
     actionText = (uid == FirebaseAuth.instance.currentUser.uid)
         ? Text("Edit")
         : followStatusText();
     return RaisedButton(
         onPressed: () {
-          performAction(context);
+          performAction(context, user);
         },
         color: Colors.blue,
         colorBrightness: Brightness.dark,
@@ -134,10 +135,17 @@ class UserProfileWidget extends StatelessWidget {
         });
   }
 
-  void performAction(BuildContext context) {
+  void performAction(BuildContext context, UserModel user) {
     String current_uid = FirebaseAuth.instance.currentUser.uid;
     if (uid == current_uid) {
-      // TODO: Edit Screen
+      // Edit Screen
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+           builder: (context) => EditProfile(user: user)
+        )
+      );
+
 
     } else {
       // logic for creating follow status
