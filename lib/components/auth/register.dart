@@ -2,7 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:nynm_fapp/components/home/feeds.dart';
+import 'package:nynm_fapp/components/home/home_root.dart';
 import 'package:nynm_fapp/components/util.dart';
 
 class RegisterPage extends StatefulWidget {
@@ -92,6 +92,11 @@ class _RegisterPageState extends State<RegisterPage> {
         (FirebaseFirestore.instance.collection("users").doc(user.uid).set({
           "name": nameController.text,
           "email": emailController.text,
+          "avatar": "https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png",
+          "resolution_count": 0,
+          "desc": "Hi! This is my new year resolution.",
+          "following_count": 0,
+          "followers_count": 0,
         })).then((result) => {
               // move to home page
               // load feed
@@ -99,7 +104,7 @@ class _RegisterPageState extends State<RegisterPage> {
                   context,
                   MaterialPageRoute(
                       builder: (context) =>
-                          FeedPage(title: "Feed", uid: user.uid)),
+                          HomeRoot(title: "Feed", uid: user.uid)),
                   (_) => false),
               emailController.clear(),
               nameController.clear(),

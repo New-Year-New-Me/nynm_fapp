@@ -3,7 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:nynm_fapp/components/home/feeds.dart';
+import 'package:nynm_fapp/components/home/home_root.dart';
 import 'package:nynm_fapp/components/util.dart';
 
 class LoginPage extends StatefulWidget {
@@ -99,7 +99,7 @@ class _LoginPageState extends State<LoginPage> {
                 Navigator.pushAndRemoveUntil(
                     context,
                     MaterialPageRoute(
-                        builder: (context) => FeedPage(
+                        builder: (context) => HomeRoot(
                             title: "Feed", uid: userCredential.user.uid)),
                     (_) => false)
               })
